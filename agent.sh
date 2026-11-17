@@ -18,7 +18,7 @@
 #
 # Every CLI argument has an env default, so the script can run with no
 # arguments at all — set the env vars and pipe the script in:
-#   AGENT_TASK="..." AGENT_KEY="..." curl -s https://.../agent.sh | ash -s -
+#   AGENT_TASK="..." AGENT_KEY="..." busybox wget -qO - https://.../agent.sh | busybox ash -s -
 #
 #   -e endpoint   <- AGENT_ENDPOINT   (default http://localhost:11434/v1)
 #   -m model      <- AGENT_MODEL      (default qwen3)
@@ -65,7 +65,7 @@
 # CLI
 # ---------------------------------------------------------------------------
 # Every CLI argument also has an env default, so the script can run with
-# no arguments at all (e.g. `curl -s https://.../agent.sh | ash -s -`
+# no arguments at all (e.g. `busybox wget -qO - https://.../agent.sh | busybox ash -s -`
 # with AGENT_TASK set in the environment).
 ENDPOINT="${AGENT_ENDPOINT:-http://localhost:11434/v1}"
 MODEL="${AGENT_MODEL:-qwen3}"
@@ -790,7 +790,7 @@ spawn_subagent() {
 # ---------------------------------------------------------------------------
 # Prompt the user to confirm a command. Returns 0 = run, 1 = denied, 2 = quit.
 # Reads from stdin so it works both interactively and when input is piped. When
-# the script itself arrives on stdin (`curl ... | ash -s -`, so $0 is not a
+# the script itself arrives on stdin (`busybox wget ... | ash -s -`, so $0 is not a
 # file) stdin holds the script text, so the answer is read from /dev/tty instead.
 ask_prompt() {
 	local cmd="$1"
